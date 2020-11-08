@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
 
-import TradingTerminal from '@/views/TradingTerminal.vue';
+import TradingTerminal from '../TradingTerminal.vue';
 
 describe('TradingTerminal.vue', () => {
   const build = () => {

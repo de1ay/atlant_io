@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
 
-import TradingTerminalCard from '@/components/trading_terminal/TradingTerminalCard.vue';
+import TradingTerminalTile from '../../components/TradingTerminalTile.vue';
 
-describe('TradingTerminalCard.vue', () => {
+describe('TradingTerminalTile.vue', () => {
   const defaultPropsData = {
     zIndex: 6,
     top: 10,
@@ -13,20 +13,20 @@ describe('TradingTerminalCard.vue', () => {
   };
 
   const build = ({ propsData = defaultPropsData, slots = undefined } = {}) => {
-    const wrapper = mount(TradingTerminalCard, {
+    const wrapper = mount(TradingTerminalTile, {
       slots,
       propsData,
     });
 
     return {
       wrapper,
-      defaultSlotWrapper: () => wrapper.find('div.card-body'),
+      defaultSlotWrapper: () => wrapper.find('div.tile-body'),
     };
   };
 
   it('should render', () => {
     const { wrapper } = build();
-    expect(wrapper.find('div.card').exists()).to.be.true;
+    expect(wrapper.find('div.tile').exists()).to.be.true;
   });
 
   it('should render slot content', () => {

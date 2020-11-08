@@ -1,13 +1,13 @@
 <template lang="pug">
-  div.card(:style="cardStyles")
-    div.card-header
-    div.card-body
+  div.tile(:style="tileStyles")
+    div.tile-header
+    div.tile-body
       slot
 </template>
 
 <script>
 export default {
-  name: 'TradingTerminalCard',
+  name: 'TradingTerminalTile',
   props: {
     zIndex: {
       type: Number,
@@ -35,7 +35,7 @@ export default {
     },
   },
   computed: {
-    cardStyles() {
+    tileStyles() {
       return {
         'z-index': this.$props.zIndex,
         top: `${this.$props.top}px`,

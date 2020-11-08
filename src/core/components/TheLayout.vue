@@ -1,8 +1,9 @@
 <template lang="pug">
   div.layout
     TheNavbar.navbar
+      router-view(name="navbar_actions")
     div.content
-      slot
+      router-view
 </template>
 
 <script>

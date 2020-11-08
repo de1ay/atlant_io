@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
 
-import BlockchainWatcher from '@/views/BlockchainWatcher.vue';
+import BlockchainWatcher from '../BlockchainWatcher.vue';
 
 describe('BlockchainWatcher.vue', () => {
   const build = () => {

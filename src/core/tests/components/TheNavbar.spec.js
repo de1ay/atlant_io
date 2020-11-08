@@ -1,11 +1,12 @@
 import { expect } from 'chai';
 import { mount, RouterLinkStub } from '@vue/test-utils';
 
-import TheNavbar from '@/components/TheNavbar.vue';
+import TheNavbar from '../../components/TheNavbar.vue';
 
 describe('TheNavbar.vue', () => {
-  const build = () => {
+  const build = (slots) => {
     const wrapper = mount(TheNavbar, {
+      slots,
       stubs: {
         RouterLink: RouterLinkStub,
       },

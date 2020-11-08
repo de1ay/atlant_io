@@ -17,8 +17,8 @@ module.exports = {
   overrides: [
     {
       files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)',
+        '{src,tests}/**/__tests__/*.{j,t}s?(x)',
+        '{src,tests}/**/tests/**/*.spec.{j,t}s?(x)',
       ],
       rules: {
         "no-unused-expressions": "off",
