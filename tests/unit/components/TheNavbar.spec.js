@@ -13,7 +13,7 @@ describe('TheNavbar.vue', () => {
 
     return {
       wrapper,
-      routerLink: () => wrapper.findComponent(RouterLinkStub),
+      routerLinks: () => wrapper.findAllComponents(RouterLinkStub),
     };
   };
 
@@ -22,8 +22,8 @@ describe('TheNavbar.vue', () => {
     expect(wrapper.find('nav.navbar').exists()).to.be.true;
   });
 
-  it('should render router-link component', () => {
-    const { routerLink } = build();
-    expect(routerLink().exists()).to.be.true;
+  it('should render 2 router-link components', () => {
+    const { routerLinks } = build();
+    expect(routerLinks().length).to.equal(2);
   });
 });

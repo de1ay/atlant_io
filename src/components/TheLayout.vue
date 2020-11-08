@@ -1,7 +1,8 @@
 <template lang="pug">
   div.layout
     TheNavbar.navbar
-    slot.content
+    div.content
+      slot
 </template>
 
 <script>
