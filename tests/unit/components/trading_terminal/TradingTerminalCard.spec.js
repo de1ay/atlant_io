@@ -5,6 +5,7 @@ import TradingTerminalCard from '@/components/trading_terminal/TradingTerminalCa
 
 describe('TradingTerminalCard.vue', () => {
   const defaultPropsData = {
+    zIndex: 6,
     width: 100,
     height: 150,
   };
@@ -35,12 +36,17 @@ describe('TradingTerminalCard.vue', () => {
     expect(defaultSlotWrapper().element.innerHTML).to.equal(slots.default);
   });
 
-  it('should take width from props', () => {
+  it('should apply z-index from props', () => {
+    const { wrapper } = build();
+    expect(wrapper.element.style.zIndex).to.equal(defaultPropsData.zIndex.toString());
+  });
+
+  it('should apply width from props', () => {
     const { wrapper } = build();
     expect(wrapper.element.style.width).to.equal(`${defaultPropsData.width}px`);
   });
 
-  it('should take height from props', () => {
+  it('should apply height from props', () => {
     const { wrapper } = build();
     expect(wrapper.element.style.height).to.equal(`${defaultPropsData.height}px`);
   });

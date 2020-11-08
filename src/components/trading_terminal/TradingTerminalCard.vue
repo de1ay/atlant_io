@@ -9,6 +9,10 @@
 export default {
   name: 'TradingTerminalCard',
   props: {
+    zIndex: {
+      type: Number,
+      required: true,
+    },
     width: {
       type: Number,
       required: true,
@@ -23,6 +27,7 @@ export default {
   computed: {
     cardStyles() {
       return {
+        'z-index': this.$props.zIndex,
         width: `${this.$props.width}px`,
         height: `${this.$props.height}px`,
       };
