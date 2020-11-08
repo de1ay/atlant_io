@@ -4,15 +4,15 @@ import { mount } from '@vue/test-utils';
 import TradingTerminalCard from '@/components/trading_terminal/TradingTerminalCard.vue';
 
 describe('TradingTerminalCard.vue', () => {
-  const defaultProps = {
+  const defaultPropsData = {
     width: 100,
     height: 150,
   };
 
-  const build = ({ props = defaultProps, slots = undefined } = {}) => {
+  const build = ({ propsData = defaultPropsData, slots = undefined } = {}) => {
     const wrapper = mount(TradingTerminalCard, {
       slots,
-      props,
+      propsData,
     });
 
     return {
@@ -37,11 +37,11 @@ describe('TradingTerminalCard.vue', () => {
 
   it('should take width from props', () => {
     const { wrapper } = build();
-    expect(wrapper.element.style.width).to.equal(defaultProps.width);
+    expect(wrapper.element.style.width).to.equal(`${defaultPropsData.width}px`);
   });
 
   it('should take height from props', () => {
     const { wrapper } = build();
-    expect(wrapper.element.style.height).to.equal(defaultProps.height);
+    expect(wrapper.element.style.height).to.equal(`${defaultPropsData.height}px`);
   });
 });
