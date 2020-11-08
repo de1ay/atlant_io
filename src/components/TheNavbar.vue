@@ -19,7 +19,7 @@ export default {
 
   &-link {
     color: $color-text;
-    font-family: $font-montserrat;
+    font-family: $font-montserratAlternates;
     text-decoration: none;
 
     &:not(:last-child) {
