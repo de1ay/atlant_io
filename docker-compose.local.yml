@@ -1,0 +1,19 @@
+version: '3'
+services:
+  local_atlant_io:
+    image: node:latest
+    working_dir: /usr/app
+    command: "/bin/sh -c 'npm run serve'"
+    ports:
+      - "8080:8080"
+    volumes: 
+      - .:/usr/app
+    restart: unless-stopped
+    
+  unittest_watch_atlant_io:
+    image: node:latest
+    working_dir: /usr/app
+    command: "/bin/sh -c 'npm run test:unit:watch'"
+    volumes: 
+      - .:/usr/app
+    restart: unless-stopped
