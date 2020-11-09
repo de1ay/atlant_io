@@ -31,14 +31,16 @@ export function saveStashTilesToLocalStorage(stashTiles) {
 }
 
 export function generateTile(origin) {
-  const translateXMax = origin.x - defaultValues.tileWidth / 2;
-  const translateYMax = origin.y - defaultValues.tileHeight / 2;
+  const translateXMaxLeft = origin.x;
+  const translateXMaxRight = translateXMaxLeft - defaultValues.tileWidth;
+  const translateYMaxUp = origin.y;
+  const translateYMaxDown = translateYMaxUp - defaultValues.tileHeight;
   return {
     uuid: uuidv4(),
     width: defaultValues.tileWidth,
     height: defaultValues.tileHeight,
-    translateX: randomIntFromInterval(-translateXMax, translateXMax),
-    translateY: randomIntFromInterval(-translateYMax, translateYMax),
+    translateX: randomIntFromInterval(-translateXMaxLeft, translateXMaxRight),
+    translateY: randomIntFromInterval(-translateYMaxUp, translateYMaxDown),
   };
 }
 

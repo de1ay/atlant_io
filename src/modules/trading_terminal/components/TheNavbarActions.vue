@@ -3,7 +3,7 @@
     unicon.actions-icon(
       name="box"
       :class="stashIconClasses"
-      @click="switchStashState"
+      @click="switchStashSidebarState"
     )
     unicon.actions-icon(name="setting")
 </template>
@@ -16,16 +16,16 @@ import mutationNames from '../store/constants/mutationNames';
 export default {
   name: 'TheNavbarActions',
   computed: {
-    ...mapState('tradingTerminal', ['isStashOpen']),
+    ...mapState('tradingTerminal', ['isStashSidebarOpen']),
     stashIconClasses() {
       return {
-        'actions-icon--active': this.isStashOpen,
+        'actions-icon--active': this.isStashSidebarOpen,
       };
     },
   },
   methods: {
     ...mapMutations('tradingTerminal', {
-      switchStashState: mutationNames.switchStashState,
+      switchStashSidebarState: mutationNames.uiSwitchStashSdiebarState,
     }),
   },
 };

@@ -3,7 +3,7 @@
     TradingTerminalDeskTile.desk-tile(
       v-for="(deskTile, index) in deskTiles" :key="deskTile.uuid"
       :boundsObjectID="tradingTerminalDeskID"
-      :zIndex="index"
+      :index="index"
       :tileData="deskTile"
     )
 </template>
@@ -30,5 +30,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+#trading_terminal-desk {
+  width: 100%;
+  height: 100%;
+}
 </style>

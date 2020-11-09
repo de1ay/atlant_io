@@ -1,6 +1,6 @@
 <template lang="pug">
   div.trading_terminal
-    TradingTerminalStash.terminal-stash(v-if="isStashOpen")
+    TradingTerminalStash.terminal-stash(v-if="isStashSidebarOpen")
     TradingTerminalDesk.terminal-desk
 </template>
 
@@ -19,7 +19,7 @@ export default {
     TradingTerminalStash,
   },
   computed: {
-    ...mapState('tradingTerminal', ['isStashOpen']),
+    ...mapState('tradingTerminal', ['isStashSidebarOpen']),
   },
   mounted() {
     this.initializeStore();
@@ -37,11 +37,6 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-
-  .terminal-desk {
-    width: 100%;
-    height: 100%;
-  }
-
+  overflow: hidden;
 }
 </style>

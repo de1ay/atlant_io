@@ -17,15 +17,14 @@ const mutations = {
     const gridOrigin = computeOriginCoordinates();
     const gridResolution = initializeGridResolution();
 
-    let deskTiles = getDeskTilesFromLocalStorage();
+    const deskTiles = getDeskTilesFromLocalStorage();
     const stashTiles = getStashTilesFromLocalStorage();
 
-    if (deskTiles.length === 0) {
-      deskTiles = generateTiles(gridOrigin, defaultValues.tilesCount - stashTiles.length);
+    const currentTilesCount = deskTiles.length + stashTiles.length;
+    if (currentTilesCount < defaultValues.tilesCount) {
+      const newDeskTiles = generateTiles(gridOrigin, defaultValues.tilesCount - currentTilesCount);
+      deskTiles.push(...newDeskTiles);
     }
-
-    saveDeskTilesToLocalStorage(deskTiles);
-    saveStashTilesToLocalStorage(stashTiles);
 
     state.grid = {
       origin: gridOrigin,
@@ -33,9 +32,46 @@ const mutations = {
     };
     state.desk.tiles = deskTiles;
     state.stash.tiles = stashTiles;
+
+    saveDeskTilesToLocalStorage(deskTiles);
+    saveStashTilesToLocalStorage(stashTiles);
   },
-  [mutationNames.switchStashState](state) {
-    state.isStashOpen = !state.isStashOpen;
+  [mutationNames.moveTileToTop](state, deskTileIndex) {
+    if (deskTileIndex === state.desk.tiles.length - 1) return;
+    const tile = state.desk.tiles[deskTileIndex];
+    const tiles = state.desk.tiles.filter((_, index) => index !== deskTileIndex);
+    tiles.push(tile);
+    state.desk.tiles = tiles;
+
+    saveDeskTilesToLocalStorage(state.desk.tiles);
+  },
+  [mutationNames.updateDeskTileTranslate](state, { deskTileIndex, translate }) {
+    if (!deskTileIndex || !translate || !translate.x || !translate.y) return;
+    state.desk.tiles[deskTileIndex].translateX = translate.x;
+    state.desk.tiles[deskTileIndex].translateY = translate.y;
+
+    saveDeskTilesToLocalStorage(state.desk.tiles);
+  },
+  [mutationNames.stashTile](state, deskTileIndex) {
+    const tile = state.desk.tiles[deskTileIndex];
+    const tiles = state.desk.tiles.filter((_, index) => index !== deskTileIndex);
+    state.desk.tiles = tiles;
+    state.stash.tiles.push(tile);
+
+    saveDeskTilesToLocalStorage(state.desk.tiles);
+    saveStashTilesToLocalStorage(state.stash.tiles);
+  },
+  [mutationNames.unstashTile](state, stashTileIndex) {
+    const tile = state.desk.stash[stashTileIndex];
+    const tiles = state.desk.stash.filter((_, index) => index !== stashTileIndex);
+    state.stash.tiles = tiles;
+    state.desk.tiles.push(tile);
+
+    saveDeskTilesToLocalStorage(state.desk.tiles);
+    saveStashTilesToLocalStorage(state.stash.tiles);
+  },
+  [mutationNames.uiSwitchStashSdiebarState](state) {
+    state.isStashSidebarOpen = !state.isStashSidebarOpen;
   },
 };
 

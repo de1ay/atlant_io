@@ -26,6 +26,7 @@ $brandText-fontSize: 24px;
 $menuItem-fontSize: 16px;
 
 .navbar {
+  z-index: 1000;
   display: grid;
   grid-template-columns: 200px auto 200px;
   grid-template-rows: $ui-navbarHeight;

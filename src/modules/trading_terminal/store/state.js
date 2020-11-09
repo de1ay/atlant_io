@@ -1,7 +1,7 @@
 import defaultValues from './constants/defaultValues';
 
 const state = {
-  isStashOpen: false,
+  isStashSidebarOpen: false,
   grid: {
     origin: {
       x: 0,

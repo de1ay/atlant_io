@@ -1,6 +1,6 @@
 <template lang="pug">
   div.layout
-    TheNavbar.navbar
+    TheNavbar
       router-view(name="navbar_actions")
     div.content
       router-view

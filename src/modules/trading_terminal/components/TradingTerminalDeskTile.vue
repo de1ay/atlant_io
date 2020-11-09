@@ -4,29 +4,32 @@
       ref="tileElement"
     )
     div.tile-header
-      div.header-title {{ $props.tileData.uuid }}
+      div.header-title {{ tileData.uuid }}
       unicon.header-action(
         name="times-circle"
         width="15px"
         height="15px"
+        @click="stashTile(index)"
       )
     div.tile-body
       slot
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 import { Draggable } from 'gsap/Draggable';
+
+import mutationNames from '../store/constants/mutationNames';
 
 export default {
   name: 'TradingTerminalDeskTile',
   props: {
     boundsObjectID: {
-      type: Number,
+      type: String,
       required: true,
     },
-    zIndex: {
+    index: {
       type: Number,
       required: true,
     },
@@ -40,24 +43,61 @@ export default {
         && (typeof val.translateY === 'number'),
     },
   },
+  data() {
+    return {
+      draggableInstance: null,
+    };
+  },
   computed: {
-    ...mapGetters('tradingTerminal', ['gridOrigin']),
+    ...mapGetters('tradingTerminal', [
+      'gridOrigin',
+      'gridResolution',
+    ]),
     tileStyles() {
       return {
-        'z-index': this.$props.zIndex,
+        'z-index': this.index,
         top: `${this.gridOrigin.y}px`,
         left: `${this.gridOrigin.x}px`,
-        width: `${this.$props.tileData.width}px`,
-        height: `${this.$props.tileData.height}px`,
-        transform: `translate(${this.$props.tileData.translateX}px, ${this.$props.tileData.translateY}px)`,
+        width: `${this.tileData.width}px`,
+        height: `${this.tileData.height}px`,
+        transform: `translate(${this.tileData.translateX}px, ${this.tileData.translateY}px)`,
       };
     },
   },
   mounted() {
-    Draggable.create(this.$refs.tileElement, {
-      bounds: `#${this.$props.boundsObjectID}`,
+    [this.draggableInstance] = Draggable.create(this.$refs.tileElement, {
+      bounds: `#${this.boundsObjectID}`,
+      onPress: () => this.moveTileToTop(this.index),
+      onDragEnd: () => this.onDragEnd(),
+      liveSnap: this.liveSnap,
       zIndexBoost: false,
     });
+  },
+  beforeDestroy() {
+    this.draggableInstance.kill();
+  },
+  methods: {
+    ...mapMutations('tradingTerminal', {
+      moveTileToTop: mutationNames.moveTileToTop,
+      updateTileTranslate: mutationNames.updateDeskTileTranslate,
+      stashTile: mutationNames.stashTile,
+    }),
+    liveSnap(value) {
+      return Math.round(value / this.gridResolution) * this.gridResolution;
+    },
+    onDragEnd() {
+      if (this.draggableInstance.endX !== this.tileData.translateX
+        || this.draggableInstance.endY !== this.tileData.translateY
+      ) {
+        this.updateTileTranslate({
+          deskTileIndex: this.index,
+          translate: {
+            x: this.draggableInstance.endX,
+            y: this.draggableInstance.endY,
+          },
+        });
+      }
+    },
   },
 };
 </script>
