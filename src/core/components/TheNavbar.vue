@@ -6,7 +6,7 @@
       router-link.menu-item(
         :to="{ name: 'TradingTerminal' }"
         active-class="menu-item--active"
-      )  Terminal
+      ) Terminal
       router-link.menu-item(
         :to="{ name: 'BlockchainWatcher' }"
         active-class="menu-item--active"
@@ -71,7 +71,7 @@ $menuItem-fontSize: 16px;
         width: 0;
         height: 1px;
         background-color: $color-text;
-        transition: width .3s ease-in-out;
+        transition: width .2s ease-in-out;
       }
 
       &:hover {
