@@ -47,6 +47,7 @@ export default {
 
   &-title {
     font-family: $font-firaSansCondensed;
+    font-size: 14px;
   }
 
   &:before {
@@ -62,6 +63,7 @@ export default {
     color: $color-surface;
     background-color: $color-primary;
     font-family: $font-firaSansCondensed;
+    font-size: 14px;
     border-radius: 5px;
     opacity: 0;
     transition: opacity 150ms ease-in-out;

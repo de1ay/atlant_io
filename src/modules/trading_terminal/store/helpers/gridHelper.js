@@ -1,14 +1,5 @@
-import scssVariables from '@/assets/scss/_variables.scss';
 import defaultValues from '../constants/defaultValues';
 import localStorageItemNames from '../constants/localStorageItemNames';
-
-export function computeOriginCoordinates() {
-  const navbarHeight = Number(scssVariables.navbarHeight);
-  return {
-    x: window.innerWidth / 2,
-    y: (window.innerHeight - navbarHeight) / 2,
-  };
-}
 
 export function initializeGridResolution() {
   const gridResolutionString = localStorage.getItem(localStorageItemNames.gridResolustion);
@@ -16,3 +7,5 @@ export function initializeGridResolution() {
   localStorage.setItem(localStorageItemNames.gridResolustion, defaultValues.gridResolution);
   return defaultValues.gridResolution;
 }
+
+export default initializeGridResolution;

@@ -73,6 +73,10 @@ const mutations = {
     state.stash.tiles = tiles;
     state.desk.tiles.push(tile);
 
+    if (state.stash.tiles.length === 0) {
+      state.isStashSidebarOpen = false;
+    }
+
     saveDeskTilesToLocalStorage(state.desk.tiles);
     saveStashTilesToLocalStorage(state.stash.tiles);
   },
