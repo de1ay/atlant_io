@@ -1,5 +1,8 @@
 <template lang="pug">
-  div.tile(:style="tileStyles")
+  div.tile(
+      :style="tileStyles"
+      ref="tileElement"
+    )
     div.tile-header
       div.header-title {{ $props.tileData.uuid }}
       unicon.header-action(
@@ -14,9 +17,15 @@
 <script>
 import { mapGetters } from 'vuex';
 
+import { Draggable } from 'gsap/Draggable';
+
 export default {
   name: 'TradingTerminalDeskTile',
   props: {
+    boundsObjectID: {
+      type: Number,
+      required: true,
+    },
     zIndex: {
       type: Number,
       required: true,
@@ -44,19 +53,43 @@ export default {
       };
     },
   },
+  mounted() {
+    Draggable.create(this.$refs.tileElement, {
+      bounds: `#${this.$props.boundsObjectID}`,
+      zIndexBoost: false,
+    });
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+$tile-headerHeight: 25px;
+
 .tile {
   position: absolute;
+  background-color: $color-surface;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 
   &-header {
+    margin: 0 5px;
+    height: $tile-headerHeight;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    user-select: none;
 
     .header {
 
+      &-title {
+        font-family: $font-firaSansCondensed;
+        font-size: 14px;
+        line-height: $tile-headerHeight;
+      }
+
       &-action {
-        @include hoverableIcon($color-text, $color-primary);
+        @include hoverableIcon($color-text, $color-secondaryDark);
       }
 
     }

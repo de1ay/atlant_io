@@ -35,5 +35,13 @@ export default {
 <style lang="scss" scoped>
 .trading_terminal {
   position: relative;
+  width: 100%;
+  height: 100%;
+
+  .terminal-desk {
+    width: 100%;
+    height: 100%;
+  }
+
 }
 </style>
