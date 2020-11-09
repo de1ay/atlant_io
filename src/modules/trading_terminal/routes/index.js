@@ -3,8 +3,14 @@ const routes = [
     path: 'trading_terminal',
     name: 'TradingTerminal',
     components: {
-      default: () => import('../TradingTerminal.vue'),
-      navbar_actions: () => import('../components/TheNavbarActions.vue'),
+      default: () => import(
+        /* webpackChunkName: "trading-terminal" */
+        '../TradingTerminal.vue'
+      ),
+      navbar_actions: () => import(
+        /* webpackChunkName: "trading-terminal" */
+        '../components/TheNavbarActions.vue'
+      ),
     },
   },
 ];
