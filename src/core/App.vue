@@ -8,3 +8,5 @@ export default {
   name: 'App',
 };
 </script>
+
+<style src="@/assets/scss/main.scss" lang="scss"/>

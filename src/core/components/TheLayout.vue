@@ -17,9 +17,14 @@ export default {
 
 <style lang="scss" scoped>
 .layout {
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  align-items: stretch;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: grid;
+  grid-template: $ui-navbarHeight auto / 100%;
+
+  .content {
+    background-color: $color-neutralLightest;
+  }
+
 }
 </style>
