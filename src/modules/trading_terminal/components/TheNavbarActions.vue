@@ -1,12 +1,33 @@
 <template lang="pug">
   div.navbar-actions
-    unicon.actions-icon(name="box")
+    unicon.actions-icon(
+      name="box"
+      :class="stashIconClasses"
+      @click="switchStashState"
+    )
     unicon.actions-icon(name="setting")
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+
+import mutationNames from '../store/constants/mutationNames';
+
 export default {
   name: 'TheNavbarActions',
+  computed: {
+    ...mapState('tradingTerminal', ['isStashOpen']),
+    stashIconClasses() {
+      return {
+        'actions-icon--active': this.isStashOpen,
+      };
+    },
+  },
+  methods: {
+    ...mapMutations('tradingTerminal', {
+      switchStashState: mutationNames.switchStashState,
+    }),
+  },
 };
 </script>
 
@@ -20,17 +41,12 @@ export default {
   align-items: stretch;
 
   .actions-icon {
+    @include hoverableIcon($color-text, $color-primary);
     width: $ui-navbarHeight;
     height: $ui-navbarHeight;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    fill: $color-text;
-    transition: fill .2s ease-in-out;
 
-    &:hover {
+    &--active {
       fill: $color-primary;
-      cursor: pointer;
     }
 
   }

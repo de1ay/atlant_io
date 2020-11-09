@@ -1,0 +1,12 @@
+@mixin hoverableIcon($defaultColor, $hoverColor) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  fill: $defaultColor;
+  transition: fill .2s ease-in-out;
+
+  &:hover {
+    fill: $hoverColor;
+    cursor: pointer;
+  }
+}

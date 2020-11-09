@@ -25,3 +25,9 @@ $font-firaSansCondensed: 'Fira Sans Condensed', sans-serif;
 
 // UI
 $ui-navbarHeight: 50px;
+
+// Export values to JS
+:export {
+  // Exported height should be in stripped pixels
+  navbarHeight: stripUnit($ui-navbarHeight);
+}

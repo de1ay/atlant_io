@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
 
-import TradingTerminalTile from '../../components/TradingTerminalTile.vue';
+import TradingTerminalDeskTile from '../../components/TradingTerminalDeskTile.vue';
 
-describe('TradingTerminalTile.vue', () => {
+describe('TradingTerminalDeskTile.vue', () => {
   const defaultPropsData = {
     zIndex: 6,
     top: 10,
@@ -13,7 +13,7 @@ describe('TradingTerminalTile.vue', () => {
   };
 
   const build = ({ propsData = defaultPropsData, slots = undefined } = {}) => {
-    const wrapper = mount(TradingTerminalTile, {
+    const wrapper = mount(TradingTerminalDeskTile, {
       slots,
       propsData,
     });

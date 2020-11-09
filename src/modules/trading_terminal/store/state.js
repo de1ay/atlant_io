@@ -1,13 +1,20 @@
-/* const defaultTileWidth = 300;
-const defaultTileHeight = 100;
-
-const defaultTile = {
-  width: defaultTileWidth,
-  height: defaultTileHeight,
-}; */
+import defaultValues from './constants/defaultValues';
 
 const state = {
-  gridResolution: 10,
+  isStashOpen: false,
+  grid: {
+    origin: {
+      x: 0,
+      y: 0,
+    },
+    resolution: defaultValues.gridResolution,
+  },
+  desk: {
+    tiles: [],
+  },
+  stash: {
+    tiles: [],
+  },
 };
 
 export default state;
