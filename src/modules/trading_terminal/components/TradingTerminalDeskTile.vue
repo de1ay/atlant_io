@@ -3,12 +3,12 @@
       :style="tileStyles"
       ref="tileElement"
     )
-    div.tile-header
+    div.tile-header(ref="tileHeaderElement")
       div.header-title {{ tileData.uuid }}
       unicon.header-action(
         name="times-circle"
-        width="15px"
-        height="15px"
+        width="16px"
+        height="16px"
         @click="stashTile(index)"
       )
     div.tile-body
@@ -50,14 +50,11 @@ export default {
   },
   computed: {
     ...mapGetters('tradingTerminal', [
-      'gridOrigin',
       'gridResolution',
     ]),
     tileStyles() {
       return {
         'z-index': this.index,
-        top: `${this.gridOrigin.y}px`,
-        left: `${this.gridOrigin.x}px`,
         width: `${this.tileData.width}px`,
         height: `${this.tileData.height}px`,
         transform: `translate(${this.tileData.translateX}px, ${this.tileData.translateY}px)`,
@@ -66,11 +63,16 @@ export default {
   },
   mounted() {
     [this.draggableInstance] = Draggable.create(this.$refs.tileElement, {
+      zIndexBoost: false,
+      inertia: false,
+      dragResistance: 0,
       bounds: `#${this.boundsObjectID}`,
+      trigger: this.$refs.tileHeaderElement,
+      force3D: false,
+      liveSnap: this.liveSnap,
       onPress: () => this.moveTileToTop(this.index),
       onDragEnd: () => this.onDragEnd(),
-      liveSnap: this.liveSnap,
-      zIndexBoost: false,
+      cursor: 'move',
     });
   },
   beforeDestroy() {
@@ -112,24 +114,27 @@ $tile-headerHeight: 25px;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 
   &-header {
-    margin: 0 5px;
+    padding: 0 5px;
     height: $tile-headerHeight;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
+    background-color: $color-primary;
+    border-radius: 5px 5px 0 0;
     user-select: none;
 
     .header {
 
       &-title {
+        color: $color-surface;
         font-family: $font-firaSansCondensed;
         font-size: 14px;
         line-height: $tile-headerHeight;
       }
 
       &-action {
-        @include hoverableIcon($color-text, $color-secondaryDark);
+        @include hoverableIcon($color-surface, $color-secondary);
       }
 
     }

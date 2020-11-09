@@ -30,24 +30,22 @@ export function saveStashTilesToLocalStorage(stashTiles) {
   return saveTilesToLocalStorage(stashTiles, localStorageItemNames.stashTiles);
 }
 
-export function generateTile(origin) {
-  const translateXMaxLeft = origin.x;
-  const translateXMaxRight = translateXMaxLeft - defaultValues.tileWidth;
-  const translateYMaxUp = origin.y;
-  const translateYMaxDown = translateYMaxUp - defaultValues.tileHeight;
+export function generateTile() {
+  const translateXMax = window.outerWidth - defaultValues.tileWidth;
+  const translateYMax = window.outerHeight - defaultValues.tileHeight;
   return {
     uuid: uuidv4(),
     width: defaultValues.tileWidth,
     height: defaultValues.tileHeight,
-    translateX: randomIntFromInterval(-translateXMaxLeft, translateXMaxRight),
-    translateY: randomIntFromInterval(-translateYMaxUp, translateYMaxDown),
+    translateX: randomIntFromInterval(0, translateXMax),
+    translateY: randomIntFromInterval(0, translateYMax),
   };
 }
 
-export function generateTiles(origin, count = defaultValues.tilesCount) {
+export function generateTiles(count = defaultValues.tilesCount) {
   const tiles = [];
   for (let i = count; i > 0; i -= 1) {
-    tiles.push(generateTile(origin));
+    tiles.push(generateTile());
   }
   return tiles;
 }

@@ -1,7 +1,7 @@
 <template lang="pug">
   div(:id="tradingTerminalDeskID")
     TradingTerminalDeskTile.desk-tile(
-      v-for="(deskTile, index) in deskTiles" :key="deskTile.uuid"
+      v-for="(deskTile, index) in deskTiles" :key="`deskTile-${deskTile.uuid}`"
       :boundsObjectID="tradingTerminalDeskID"
       :index="index"
       :tileData="deskTile"

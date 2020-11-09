@@ -1,6 +1,7 @@
 <template lang="pug">
   div.trading_terminal
-    TradingTerminalStash.terminal-stash(v-if="isStashSidebarOpen")
+    transition(name="stash-slide")
+      TradingTerminalStash.terminal-stash(v-if="isStashSidebarOpen")
     TradingTerminalDesk.terminal-desk
 </template>
 
@@ -38,5 +39,14 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
+
+  .stash-slide-enter-active, .stash-slide-leave-active {
+    transition: transform .2s ease;
+  }
+
+  .stash-slide-enter, .stash-slide-leave-to {
+    transform: translateX(300px);
+  }
+
 }
 </style>
