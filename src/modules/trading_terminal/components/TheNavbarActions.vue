@@ -7,7 +7,6 @@
         :class="stashIconClasses"
         @click="switchStashSidebarState"
       )
-    unicon.actions-icon(name="setting")
 </template>
 
 <script>
