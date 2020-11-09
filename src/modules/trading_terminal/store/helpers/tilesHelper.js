@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import scssVariables from '@/assets/scss/_variables.scss';
 import { randomIntFromInterval } from '@/core/helpers';
 
 import defaultValues from '../constants/defaultValues';
@@ -32,7 +33,9 @@ export function saveStashTilesToLocalStorage(stashTiles) {
 
 export function generateTile() {
   const translateXMax = window.outerWidth - defaultValues.tileWidth;
-  const translateYMax = window.outerHeight - defaultValues.tileHeight;
+  const translateYMax = window.outerHeight
+    - Number(scssVariables.navbarHeight)
+    - defaultValues.tileHeight;
   return {
     uuid: uuidv4(),
     width: defaultValues.tileWidth,

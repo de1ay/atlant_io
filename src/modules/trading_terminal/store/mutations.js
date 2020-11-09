@@ -33,6 +33,7 @@ const mutations = {
     saveDeskTilesToLocalStorage(deskTiles);
     saveStashTilesToLocalStorage(stashTiles);
   },
+
   [mutationNames.moveTileToTop](state, deskTileIndex) {
     if (deskTileIndex === state.desk.tiles.length - 1) return;
     const tile = state.desk.tiles[deskTileIndex];
@@ -42,6 +43,16 @@ const mutations = {
 
     saveDeskTilesToLocalStorage(state.desk.tiles);
   },
+
+  [mutationNames.updateDeskTileSize](state, { deskTileIndex, size }) {
+    if (!deskTileIndex || !size || !size.width || !size.height) return;
+
+    state.desk.tiles[deskTileIndex].width = size.width;
+    state.desk.tiles[deskTileIndex].height = size.height;
+
+    saveDeskTilesToLocalStorage(state.desk.tiles);
+  },
+
   [mutationNames.updateDeskTileTranslate](state, { deskTileIndex, translate }) {
     if (!deskTileIndex || !translate || !translate.x || !translate.y) return;
 
@@ -50,6 +61,7 @@ const mutations = {
 
     saveDeskTilesToLocalStorage(state.desk.tiles);
   },
+
   [mutationNames.stashTile](state, deskTileIndex) {
     const tile = state.desk.tiles[deskTileIndex];
     const tiles = state.desk.tiles.filter((_, index) => index !== deskTileIndex);
@@ -60,6 +72,7 @@ const mutations = {
     saveDeskTilesToLocalStorage(state.desk.tiles);
     saveStashTilesToLocalStorage(state.stash.tiles);
   },
+
   [mutationNames.unstashTile](state, stashTileIndex) {
     const tile = {
       ...state.stash.tiles[stashTileIndex],

@@ -13,12 +13,15 @@
       )
     div.tile-body
       slot
+    div.tile-resizer(ref="tileResizerElement")
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 
 import { Draggable } from 'gsap/Draggable';
+
+import scssVariables from '@/assets/scss/_variables.scss';
 
 import mutationNames from '../store/constants/mutationNames';
 
@@ -45,7 +48,8 @@ export default {
   },
   data() {
     return {
-      draggableInstance: null,
+      tileDraggableInstance: null,
+      tileResizerDraggableInstance: null,
     };
   },
   computed: {
@@ -62,43 +66,80 @@ export default {
     },
   },
   mounted() {
-    [this.draggableInstance] = Draggable.create(this.$refs.tileElement, {
+    [this.tileDraggableInstance] = Draggable.create(this.$refs.tileElement, {
       zIndexBoost: false,
       inertia: false,
       dragResistance: 0,
       bounds: `#${this.boundsObjectID}`,
       trigger: this.$refs.tileHeaderElement,
-      force3D: false,
-      liveSnap: this.liveSnap,
+      liveSnap: this.gridLiveSnap,
       onPress: () => this.moveTileToTop(this.index),
-      onDragEnd: () => this.onDragEnd(),
+      onDragEnd: () => this.onTileDragEnd(),
       cursor: 'move',
+    });
+    [this.tileResizerDraggableInstance] = Draggable.create(this.$refs.tileResizerElement, {
+      type: 'top, left',
+      zIndexBoost: false,
+      inertia: false,
+      dragResistance: 0,
+      bounds: this.computeTileResizerBounds(),
+      liveSnap: this.gridLiveSnap,
+      onDrag: () => this.onTileResizerDrag(),
+      cursor: 'nw-resize',
     });
   },
   beforeDestroy() {
-    this.draggableInstance.kill();
+    this.tileDraggableInstance.kill();
+    this.tileResizerDraggableInstance.kill();
   },
   methods: {
     ...mapMutations('tradingTerminal', {
       moveTileToTop: mutationNames.moveTileToTop,
+      updateTileSize: mutationNames.updateDeskTileSize,
       updateTileTranslate: mutationNames.updateDeskTileTranslate,
       stashTile: mutationNames.stashTile,
     }),
-    liveSnap(value) {
+    gridLiveSnap(value) {
       return Math.round(value / this.gridResolution) * this.gridResolution;
     },
-    onDragEnd() {
-      if (this.draggableInstance.endX !== this.tileData.translateX
-        || this.draggableInstance.endY !== this.tileData.translateY
+    onTileDragEnd() {
+      if (this.tileDraggableInstance.endX !== this.tileData.translateX
+        || this.tileDraggableInstance.endY !== this.tileData.translateY
       ) {
         this.updateTileTranslate({
           deskTileIndex: this.index,
           translate: {
-            x: this.draggableInstance.endX,
-            y: this.draggableInstance.endY,
+            x: this.tileDraggableInstance.endX,
+            y: this.tileDraggableInstance.endY,
           },
         });
+        this.$nextTick(this.updateTileResizerBounds());
       }
+    },
+    onTileResizerDrag() {
+      this.updateTileSize({
+        deskTileIndex: this.index,
+        size: {
+          width: this.tileResizerDraggableInstance.x,
+          height: this.tileResizerDraggableInstance.y,
+        },
+      });
+    },
+    computeTileResizerBounds() {
+      const navbarHeight = Number(scssVariables.navbarHeight);
+      const minWidth = 150;
+      const minHeight = 100;
+      const tileResizerTranslate = 15; // translate(-15px, -15px)
+      return {
+        top: minHeight - tileResizerTranslate,
+        left: minWidth - tileResizerTranslate,
+        width: window.outerWidth - this.tileData.translateX - minWidth + tileResizerTranslate,
+        height: window.outerHeight - navbarHeight
+          - this.tileData.translateY - minHeight + tileResizerTranslate,
+      };
+    },
+    updateTileResizerBounds() {
+      this.tileResizerDraggableInstance.applyBounds(this.computeTileResizerBounds());
     },
   },
 };
@@ -131,10 +172,40 @@ $tile-headerHeight: 25px;
         font-family: $font-firaSansCondensed;
         font-size: 14px;
         line-height: $tile-headerHeight;
+        overflow: hidden;
       }
 
       &-action {
         @include hoverableIcon($color-surface, $color-secondary);
+      }
+
+    }
+
+  }
+
+  &-resizer {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: -10px;
+    bottom: -10px;
+    overflow: hidden;
+    transform: translate(-15px, -15px); // for easy tile size update
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      background-color: $color-primary;
+      transition: background-color .2 ease-in-out;
+      transform: rotate(45deg) translate(30%, 0);
+    }
+
+    &:hover {
+
+      &:after {
+        background-color: $color-primaryDark;
       }
 
     }
