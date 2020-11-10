@@ -63,12 +63,16 @@ export default {
       return transaction;
     },
     subscribe() {
-      webSocketConnection.subscribe();
-      this.setIsSubscribed(true);
+      if (webSocketConnection.state === WebSocket.OPEN) {
+        webSocketConnection.subscribe();
+        this.setIsSubscribed(true);
+      }
     },
     unsubscribe() {
-      webSocketConnection.unsubscribe();
-      this.setIsSubscribed(false);
+      if (webSocketConnection.state === WebSocket.OPEN) {
+        webSocketConnection.unsubscribe();
+        this.setIsSubscribed(false);
+      }
     },
   },
 };
@@ -76,7 +80,9 @@ export default {
 
 <style lang="scss" scoped>
 .watcher-control {
-  padding: 20px;
+  padding: 10px {
+    top: 20px;
+  };
   width: 500px;
   display: flex;
   flex-direction: row;
@@ -84,8 +90,8 @@ export default {
   align-items: stretch;
 
   .control-button {
-    height: 30px;
     width: 150px;
+    height: 30px;
     display: flex;
     flex-direction: row;
     justify-content: center;

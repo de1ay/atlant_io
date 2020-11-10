@@ -6,9 +6,11 @@
 </template>
 
 <script>
-import webSocketConnection from './services/webSocket';
+import { mapMutations } from 'vuex';
 
 import store from './store';
+import mutationNames from './store/constants/mutationNames';
+import webSocketConnection from './services/webSocket';
 
 import BlockchainWatcherControl from './components/BlockchainWatcherControl.vue';
 import BlockchainWatcherTransactions from './components/BlockchainWatcherTransactions.vue';
@@ -25,11 +27,19 @@ export default {
     }
     webSocketConnection.connect();
   },
+  created() {
+    this.initializeStore();
+  },
   destroyed() {
     if (this.$store.state.blockchainWatcher) {
       this.$store.unregisterModule('blockchainWatcher');
     }
     webSocketConnection.close();
+  },
+  methods: {
+    ...mapMutations('blockchainWatcher', {
+      initializeStore: mutationNames.initializeStore,
+    }),
   },
 };
 </script>
@@ -46,7 +56,7 @@ export default {
   align-items: stretch;
 
   &-content {
-    width: 900px;
+    width: 1200px;
   }
 
 }
