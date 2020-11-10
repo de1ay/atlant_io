@@ -13,6 +13,5 @@ COPY --from=0 /usr/app/dist /usr/app/dist
 ADD ./nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
-EXPOSE 443
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
