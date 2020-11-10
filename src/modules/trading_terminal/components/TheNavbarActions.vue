@@ -12,6 +12,7 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
 
+import store from '../store';
 import mutationNames from '../store/constants/mutationNames';
 
 export default {
@@ -24,6 +25,11 @@ export default {
         'actions-icon--active': this.isStashSidebarOpen,
       };
     },
+  },
+  beforeCreate() {
+    if (!this.$store.state.tradingTerminal) {
+      this.$store.registerModule('tradingTerminal', store);
+    }
   },
   methods: {
     ...mapMutations('tradingTerminal', {

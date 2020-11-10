@@ -10,3 +10,19 @@
     cursor: pointer;
   }
 }
+
+@mixin hoverableButton($primaryColor, $secondaryColor) {
+  color: $primaryColor;
+  background-color: $secondaryColor;
+  border: 1px solid $primaryColor;
+  border-radius: 5px;
+  transition: color .2s ease-in-out,
+              border-color .2s ease-in-out,
+              background-color .2s ease-in-out;
+
+  &:hover {
+    color: $secondaryColor;
+    background-color: $primaryColor;
+    cursor: pointer;
+  }
+}

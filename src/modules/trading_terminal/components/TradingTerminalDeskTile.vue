@@ -84,6 +84,7 @@ export default {
       dragResistance: 0,
       bounds: this.computeTileResizerBounds(),
       liveSnap: this.gridLiveSnap,
+      onPress: () => this.moveTileToTop(this.index),
       onDrag: () => this.onTileResizerDrag(),
       cursor: 'nw-resize',
     });

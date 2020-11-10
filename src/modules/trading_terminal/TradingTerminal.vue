@@ -8,6 +8,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 
+import store from './store';
 import mutationNames from './store/constants/mutationNames';
 
 import TradingTerminalDesk from './components/TradingTerminalDesk.vue';
@@ -22,8 +23,18 @@ export default {
   computed: {
     ...mapState('tradingTerminal', ['isStashSidebarOpen']),
   },
+  beforeCreate() {
+    if (!this.$store.state.tradingTerminal) {
+      this.$store.registerModule('tradingTerminal', store);
+    }
+  },
   mounted() {
     this.initializeStore();
+  },
+  destroyed() {
+    if (this.$store.state.tradingTerminal) {
+      this.$store.unregisterModule('tradingTerminal');
+    }
   },
   methods: {
     ...mapMutations('tradingTerminal', {
