@@ -10,7 +10,7 @@ FROM nginx:latest
 COPY --from=0 /usr/app/dist /usr/app/dist
 
 # Nginx configuration
-ADD ./nginx.conf /etc/nginx/nginx.conf
+ADD nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
